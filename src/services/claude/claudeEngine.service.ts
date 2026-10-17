@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 
 import { CLI_ARGS, COMPLETION_ARGS, COMPLETION_ENV } from "../../constant/claude.constant";
+import { CliProtocolLib } from "../../libs/claude/cliProtocol.lib";
 import type { BlockedEvent } from "../../types/interfaces/claude.interface";
 import type { CompletionConfig } from "../../types/interfaces/config.interface";
 import { CliProcessPoolService } from "./cliProcessPool.service";
@@ -53,9 +54,14 @@ export class ClaudeEngineService implements vscode.Disposable {
       isCreditAllowed: (model) => this.creditsAllowed.has(model),
       onBlocked: (event) => this.blocked.fire(event),
       onStderr: (chunk) => this.log.append(`[stderr] ${chunk}`),
-      onFinished: (reason, elapsedMs) => {
+      onFinished: (reason, elapsedMs, usage) => {
         this.pool.kill(proc);
-        this.log.appendLine(`[${new Date().toISOString()}] [${this.label}] ${reason} in ${elapsedMs} ms`);
+        const time = new Date().toLocaleTimeString("en-AU", { hour12: false });
+        const parts = [`${elapsedMs.toLocaleString("en-AU")} ms`, this.config.model];
+        if (usage) {
+          parts.push(CliProtocolLib.describeUsage(usage));
+        }
+        this.log.appendLine(`[${time}] [${this.label}] ${reason} | ${parts.join(" | ")}`);
       },
     });
     return request.run(prompt);

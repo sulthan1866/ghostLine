@@ -7,14 +7,18 @@ import { Readable } from "stream";
 import type { Usage } from "../../types/interfaces/claude.interface";
 
 export class CliProtocolLib {
-  static describeUsage(usage: Usage | undefined): string {
-    if (!usage) {
-      return "";
-    }
-    const input =
-      (usage.input_tokens ?? 0) + (usage.cache_creation_input_tokens ?? 0) + (usage.cache_read_input_tokens ?? 0);
+  /** e.g. "tokens 1,290 total | 1,234 in (1,100 cached) | 56 out (10 thinking)" */
+  static describeUsage(usage: Usage): string {
+    const count = (value: number): string => value.toLocaleString("en-AU");
+    const cached = usage.cache_read_input_tokens ?? 0;
+    const input = (usage.input_tokens ?? 0) + (usage.cache_creation_input_tokens ?? 0) + cached;
+    const output = usage.output_tokens ?? 0;
     const thinking = usage.output_tokens_details?.thinking_tokens ?? 0;
-    return ` (${input} in, ${usage.output_tokens ?? 0} out${thinking ? `, ${thinking} thinking` : ""})`;
+    return [
+      `tokens ${count(input + output)} total`,
+      `${count(input)} in${cached ? ` (${count(cached)} cached)` : ""}`,
+      `${count(output)} out${thinking ? ` (${count(thinking)} thinking)` : ""}`,
+    ].join(" | ");
   }
 
   /** One stream-json input line. */

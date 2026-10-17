@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 
 import { BLOCKING_ERRORS, CONSENT_DIALOG, CONSENT_REQUIRED } from "../../constant/claude.constant";
 import { CliProtocolLib } from "../../libs/claude/cliProtocol.lib";
-import type { BlockedEvent, CompletionRequestOptions } from "../../types/interfaces/claude.interface";
+import type { BlockedEvent, CompletionRequestOptions, Usage } from "../../types/interfaces/claude.interface";
 
 /**
  * One prompt sent to one CLI process. Settles with the model's reply, or undefined on
@@ -64,11 +64,10 @@ export class CompletionRequestService {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private handleResult(message: any): void {
-    const usage = CliProtocolLib.describeUsage(message.usage);
     if (message.is_error) {
-      this.finish(undefined, `error: ${message.result ?? message.subtype}${usage}`);
+      this.finish(undefined, `error: ${message.result ?? message.subtype}`, message.usage);
     } else {
-      this.finish(message.result ?? "", `ok${usage}`);
+      this.finish(message.result ?? "", "ok", message.usage);
     }
   }
 
@@ -80,14 +79,14 @@ export class CompletionRequestService {
     this.finish(undefined, reason);
   }
 
-  private finish(value: string | undefined, reason: string): void {
+  private finish(value: string | undefined, reason: string, usage?: Usage): void {
     if (this.done) {
       return;
     }
     this.done = true;
     clearTimeout(this.timer);
     this.cancelSub?.dispose();
-    this.options.onFinished(reason, Date.now() - this.started);
+    this.options.onFinished(reason, Date.now() - this.started, usage);
     this.resolve(value);
   }
 }

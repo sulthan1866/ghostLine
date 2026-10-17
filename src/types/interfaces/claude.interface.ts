@@ -37,6 +37,6 @@ export interface CompletionRequestOptions {
   isCreditAllowed: (model: string) => boolean;
   onBlocked: (event: BlockedEvent) => void;
   onStderr: (chunk: string) => void;
-  /** Called once when the request ends, after which the process is no longer needed. */
-  onFinished: (reason: string, elapsedMs: number) => void;
+  /** Called once when the request ends, after which the process is no longer needed. `usage` is set if it replied. */
+  onFinished: (reason: string, elapsedMs: number, usage?: Usage) => void;
 }
