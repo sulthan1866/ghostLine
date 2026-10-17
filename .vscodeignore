@@ -1,0 +1,10 @@
+src/**
+test/**
+node_modules/**
+.vscode/**
+tsconfig*.json
+jest.config.js
+eslint.config.mjs
+.prettierrc.json
+.npmrc
+**/*.map

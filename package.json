@@ -1,0 +1,133 @@
+{
+  "name": "ghostline",
+  "displayName": "Ghostline",
+  "description": "Copilot-style inline completions powered by your local Claude Code CLI.",
+  "version": "0.1.0",
+  "publisher": "sulthan1869",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Machine Learning"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "extensionDependencies": [
+    "anthropic.claude-code"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "ghostline.toggle",
+        "title": "Ghostline: Toggle Inline Completions"
+      },
+      {
+        "command": "ghostline.toggleLanguage",
+        "title": "Ghostline: Toggle for Current Language"
+      },
+      {
+        "command": "ghostline.selectModel",
+        "title": "Ghostline: Select Model"
+      },
+      {
+        "command": "ghostline.snooze",
+        "title": "Ghostline: Snooze / Resume"
+      },
+      {
+        "command": "ghostline.openSettings",
+        "title": "Ghostline: Open Settings"
+      },
+      {
+        "command": "ghostline.toggleNextEdit",
+        "title": "Ghostline: Toggle Next Edit Suggestions"
+      },
+      {
+        "command": "ghostline.acceptEdit",
+        "title": "Ghostline: Accept Suggested Edit",
+        "enablement": "ghostline.editSuggestionVisible"
+      },
+      {
+        "command": "ghostline.dismissEdit",
+        "title": "Ghostline: Dismiss Suggested Edit",
+        "enablement": "ghostline.editSuggestionVisible"
+      }
+    ],
+    "configuration": {
+      "title": "Ghostline",
+      "properties": {
+        "ghostline.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable inline completions."
+        },
+        "ghostline.model": {
+          "type": "string",
+          "default": "haiku",
+          "description": "Model alias or ID passed to the CLI (--model). A fast model such as haiku is strongly recommended."
+        },
+        "ghostline.nextEditSuggestions": {
+          "type": "boolean",
+          "default": false,
+          "description": "Suggest follow-up edits elsewhere near the cursor (including changes and deletions), previewed as a diff. Accept with Tab, dismiss with Esc. Sends an extra request after each pause in typing, so it uses more of your plan's usage."
+        },
+        "ghostline.debounceMs": {
+          "type": "number",
+          "default": 350,
+          "description": "Pause in typing (ms) before a completion is requested."
+        },
+        "ghostline.useNeighbourFiles": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include similar snippets from other open files of the same language."
+        },
+        "ghostline.excludedLanguages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "plaintext",
+            "scminput",
+            "log"
+          ],
+          "description": "Language IDs where completions are disabled. Files that commonly hold credentials (.env, .npmrc, *.pem, *.key and similar) are never sent, whatever this is set to."
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "ghostline.acceptEdit",
+        "key": "tab",
+        "when": "ghostline.editSuggestionVisible && editorTextFocus && !editorReadonly && !inlineSuggestionVisible && !suggestWidgetVisible && !inSnippetMode && !editorTabMovesFocus"
+      },
+      {
+        "command": "ghostline.dismissEdit",
+        "key": "escape",
+        "when": "ghostline.editSuggestionVisible && editorTextFocus && !inlineSuggestionVisible && !suggestWidgetVisible"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src test && prettier --check src test",
+    "format": "prettier --write src test",
+    "test": "jest",
+    "package": "yes y | npx vsce package"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.90.0",
+    "eslint": "^10.12.0",
+    "jest": "^30.5.2",
+    "prettier": "^3.9.10",
+    "ts-jest": "^29.4.15",
+    "typescript": "^5.4.0",
+    "typescript-eslint": "^8.71.2"
+  }
+}
