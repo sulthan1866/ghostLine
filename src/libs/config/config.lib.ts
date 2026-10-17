@@ -5,11 +5,11 @@ import { CONFIG_SECTION } from "../../constant/extension.constant";
 import type { CompletionConfig } from "../../types/interfaces/config.interface";
 
 export class ConfigLib {
-  static read(): CompletionConfig {
+  static read(model: string): CompletionConfig {
     const c = vscode.workspace.getConfiguration(CONFIG_SECTION);
     return {
       enabled: c.get("enabled", true),
-      model: c.get("model", "haiku"),
+      model,
       debounceMs: c.get("debounceMs", 350),
       timeoutMs: 15000,
       maxPrefixChars: 3000,

@@ -8,3 +8,9 @@ eslint.config.mjs
 .prettierrc.json
 .npmrc
 **/*.map
+README.dev.md
+.agents/**
+.claude/**
+.fallow/**
+.fallowrc.json
+skills-lock.json

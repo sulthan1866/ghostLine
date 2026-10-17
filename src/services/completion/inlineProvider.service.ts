@@ -19,6 +19,8 @@ export class InlineProviderService implements vscode.InlineCompletionItemProvide
     private readonly engine: ClaudeEngineService,
     private readonly getConfig: () => CompletionConfig,
     private readonly isPaused: () => boolean,
+    /** Whether the document's latest edit is routed to completion rather than next edit. */
+    private readonly isRoutedHere: (document: vscode.TextDocument) => boolean,
     private readonly onBusyChange: (busy: boolean) => void,
   ) {}
 
@@ -70,8 +72,12 @@ export class InlineProviderService implements vscode.InlineCompletionItemProvide
       return [this.item(cached, position)];
     }
 
-    // 2. Debounce: VS Code cancels the token when the user keeps typing.
+    // 2. Edits to existing code belong to next edit suggestions, so one keystroke costs one request.
+    //    Debounce: VS Code cancels the token when the user keeps typing.
     if (context.triggerKind === vscode.InlineCompletionTriggerKind.Automatic) {
+      if (!this.isRoutedHere(document)) {
+        return undefined;
+      }
       await AsyncLib.sleep(config.debounceMs);
       if (token.isCancellationRequested) {
         return undefined;

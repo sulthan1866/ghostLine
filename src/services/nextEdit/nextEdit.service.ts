@@ -4,6 +4,7 @@ import { NEXT_EDIT_BUSY_SOURCE, NEXT_EDIT_SYSTEM_PROMPT } from "../../constant/n
 import type { CompletionConfig } from "../../types/interfaces/config.interface";
 import type { RunningFeature } from "../../types/interfaces/nextEdit.interface";
 import { ClaudeEngineService } from "../claude/claudeEngine.service";
+import type { SuggestionRouterService } from "../routing/suggestionRouter.service";
 import type { StatusMenuService } from "../ui/statusMenu.service";
 import { NextEditControllerService } from "./nextEditController.service";
 
@@ -21,6 +22,7 @@ export class NextEditService implements vscode.Disposable {
     private readonly getConfig: () => CompletionConfig,
     private readonly log: vscode.OutputChannel,
     private readonly menu: StatusMenuService,
+    private readonly router: SuggestionRouterService,
   ) {
     this.sync();
   }
@@ -54,6 +56,7 @@ export class NextEditService implements vscode.Disposable {
       engine,
       this.getConfig,
       () => this.menu.isPaused(),
+      (document) => this.router.allows(document, "nextEdit"),
       (busy) => this.menu.setBusy(NEXT_EDIT_BUSY_SOURCE, busy),
     );
     return { engine, controller, subscriptions: [engine.onBlocked((event) => this.menu.block(event))] };

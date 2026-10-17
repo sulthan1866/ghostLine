@@ -2,7 +2,7 @@
   "name": "ghostline",
   "displayName": "Ghostline",
   "description": "Copilot-style inline completions powered by your local Claude Code CLI.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "sulthan1869",
   "engines": {
     "vscode": "^1.90.0"
@@ -63,11 +63,6 @@
           "default": true,
           "description": "Enable inline completions."
         },
-        "ghostline.model": {
-          "type": "string",
-          "default": "haiku",
-          "description": "Model alias or ID passed to the CLI (--model). A fast model such as haiku is strongly recommended."
-        },
         "ghostline.nextEditSuggestions": {
           "type": "boolean",
           "default": false,
@@ -116,7 +111,7 @@
     "lint": "eslint src test && prettier --check src test",
     "format": "prettier --write src test",
     "test": "jest",
-    "package": "yes y | npx vsce package"
+    "package": "yes y | vsce package"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

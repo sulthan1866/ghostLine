@@ -28,6 +28,8 @@ export class NextEditControllerService implements vscode.Disposable {
     private readonly engine: ClaudeEngineService,
     private readonly getConfig: () => CompletionConfig,
     private readonly isPaused: () => boolean,
+    /** Whether the document's latest edit is routed to next edit rather than completion. */
+    private readonly isRoutedHere: (document: vscode.TextDocument) => boolean,
     private readonly onBusyChange: (busy: boolean) => void,
   ) {
     this.disposables.push(
@@ -80,7 +82,8 @@ export class NextEditControllerService implements vscode.Disposable {
       config.excludedLanguages.includes(document.languageId) ||
       editor?.document !== document ||
       document.version !== version ||
-      edits.length === 0
+      edits.length === 0 ||
+      !this.isRoutedHere(document)
     ) {
       return;
     }
