@@ -42,6 +42,8 @@ All available from the Command Palette:
 | `ghostline.enabled` | `true` | Enable inline completions. |
 | `ghostline.nextEditSuggestions` | `false` | Suggest follow-up edits near the cursor. |
 | `ghostline.debounceMs` | `350` | Pause in typing (ms) before a completion is requested. |
+| `ghostline.maxPrefixChars` | `3000` | Characters before the cursor sent with each completion (500–20,000). More context, more usage. |
+| `ghostline.maxSuffixChars` | `1000` | Characters after the cursor sent with each completion (0–10,000). More context, more usage. |
 | `ghostline.useNeighbourFiles` | `true` | Include similar snippets from other open files of the same language. |
 | `ghostline.excludedLanguages` | `plaintext`, `scminput`, `log` | Language IDs where completions are disabled. |
 

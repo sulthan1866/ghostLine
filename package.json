@@ -73,6 +73,20 @@
           "default": 350,
           "description": "Pause in typing (ms) before a completion is requested."
         },
+        "ghostline.maxPrefixChars": {
+          "type": "number",
+          "default": 2000,
+          "minimum": 500,
+          "maximum": 20000,
+          "description": "Characters of code before the cursor sent with each completion request."
+        },
+        "ghostline.maxSuffixChars": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 250,
+          "maximum": 10000,
+          "description": "Characters of code after the cursor sent with each completion request."
+        },
         "ghostline.useNeighbourFiles": {
           "type": "boolean",
           "default": true,
