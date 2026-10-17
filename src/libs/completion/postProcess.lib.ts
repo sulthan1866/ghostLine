@@ -18,6 +18,25 @@ export class PostProcessLib {
     return text;
   }
 
+  /**
+   * How many characters after the cursor the completion should replace. Editors auto-close quotes and
+   * brackets (`"|"`), and models often write the closer plus more (`Hi";`). When the rest of the line is
+   * only closers that the completion already contains in order, replace them so they are not left over.
+   */
+  static replacedSuffixLength(text: string, lineSuffix: string): number {
+    const rest = lineSuffix.trimEnd();
+    if (!rest || !COMPLETABLE_LINE_END.test(rest) || text.includes("\n")) {
+      return 0;
+    }
+    let i = 0;
+    for (const char of text) {
+      if (char === rest[i]) {
+        i++;
+      }
+    }
+    return i === rest.length ? rest.length : 0;
+  }
+
   /** Takes the text inside `<completion>` tags (if any) and drops a surrounding code fence. */
   private static stripWrapping(raw: string): string {
     const tagged = raw.match(/<completion>([\s\S]*?)<\/completion>/);

@@ -69,7 +69,7 @@ export class InlineProviderService implements vscode.InlineCompletionItemProvide
     // 1. Typing-through: reuse the previous suggestion if the user is typing it.
     const cached = this.cache.get(uri, fullPrefix);
     if (cached) {
-      return [this.item(cached, position)];
+      return [this.item(cached, document, position)];
     }
 
     // 2. Edits to existing code belong to next edit suggestions, so one keystroke costs one request.
@@ -97,14 +97,16 @@ export class InlineProviderService implements vscode.InlineCompletionItemProvide
         return undefined;
       }
       this.cache.set(uri, fullPrefix, completion);
-      return [this.item(completion, position)];
+      return [this.item(completion, document, position)];
     } finally {
       this.setBusy(-1);
     }
   }
 
-  private item(text: string, position: vscode.Position): vscode.InlineCompletionItem {
-    return new vscode.InlineCompletionItem(text, new vscode.Range(position, position));
+  private item(text: string, document: vscode.TextDocument, position: vscode.Position): vscode.InlineCompletionItem {
+    const lineSuffix = document.lineAt(position.line).text.slice(position.character);
+    const end = position.translate(0, PostProcessLib.replacedSuffixLength(text, lineSuffix));
+    return new vscode.InlineCompletionItem(text, new vscode.Range(position, end));
   }
 
   private setBusy(delta: number): void {

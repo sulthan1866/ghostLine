@@ -2,8 +2,12 @@
   "name": "ghostline",
   "displayName": "Ghostline",
   "description": "Copilot-style inline completions powered by your local Claude Code CLI.",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "publisher": "sulthan1869",
+  "icon": "images/icon.png",
+  "repository": {
+    "url": "https://github.com/sulthan1866/ghostLine"
+  },
   "engines": {
     "vscode": "^1.90.0"
   },

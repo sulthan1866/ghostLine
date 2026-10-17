@@ -83,3 +83,26 @@ describe("cleanCompletion", () => {
     });
   });
 });
+
+describe("replacedSuffixLength", () => {
+  it("replaces an auto-closed quote the completion already writes", () => {
+    expect(PostProcessLib.replacedSuffixLength(`Hi! I'm GhostLine";`, `"`)).toBe(1);
+  });
+
+  it("replaces auto-closed brackets the completion writes in order", () => {
+    expect(PostProcessLib.replacedSuffixLength(`a, ["b"]);`, `])  `)).toBe(2);
+  });
+
+  it("keeps closers the completion does not write", () => {
+    expect(PostProcessLib.replacedSuffixLength("a, b", ")")).toBe(0);
+    expect(PostProcessLib.replacedSuffixLength("a)]", "])")).toBe(0);
+  });
+
+  it("keeps the rest of the line when it is real code", () => {
+    expect(PostProcessLib.replacedSuffixLength("x, bar)", "bar)")).toBe(0);
+  });
+
+  it("does nothing at the end of a line", () => {
+    expect(PostProcessLib.replacedSuffixLength("foo();", "")).toBe(0);
+  });
+});
