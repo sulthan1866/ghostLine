@@ -124,10 +124,13 @@
     "@types/node": "^20.11.0",
     "@types/vscode": "^1.90.0",
     "eslint": "^10.12.0",
+    "fallow": "^3.33.1",
     "jest": "^30.5.2",
     "prettier": "^3.9.10",
     "ts-jest": "^29.4.15",
     "typescript": "^5.4.0",
-    "typescript-eslint": "^8.71.2"
-  }
+    "typescript-eslint": "^8.71.2",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {}
 }

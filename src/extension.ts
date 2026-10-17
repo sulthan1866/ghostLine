@@ -1,21 +1,21 @@
 import * as vscode from "vscode";
 
-import { resolveClaudeBinary } from "./claude/binary";
-import { ClaudeEngine } from "./claude/claudeEngine";
-import { ModelCatalog } from "./claude/modelCatalog";
-import { ClaudeInlineProvider } from "./completion/inlineProvider";
-import { COMPLETION_SYSTEM_PROMPT } from "./completion/prompt";
-import { ConfigStore } from "./config/configStore";
-import { NextEditService } from "./nextEdit/nextEditService";
-import { StatusMenu } from "./ui/statusMenu";
+import { COMPLETION_SYSTEM_PROMPT } from "./constant/completion.constant";
+import { ClaudeBinaryLib } from "./libs/claude/claudeBinary.lib";
+import { ClaudeEngineService } from "./services/claude/claudeEngine.service";
+import { ModelCatalogService } from "./services/claude/modelCatalog.service";
+import { InlineProviderService } from "./services/completion/inlineProvider.service";
+import { ConfigStoreService } from "./services/config/configStore.service";
+import { NextEditService } from "./services/nextEdit/nextEdit.service";
+import { StatusMenuService } from "./services/ui/statusMenu.service";
 
 export function activate(context: vscode.ExtensionContext): void {
   const log = vscode.window.createOutputChannel("Ghostline");
-  const config = new ConfigStore();
+  const config = new ConfigStoreService();
   const getConfig = () => config.current;
 
   // The menu works without the CLI, so settings can still be changed.
-  const menu = new StatusMenu(config, log);
+  const menu = new StatusMenuService(config, log);
   context.subscriptions.push(
     log,
     config,
@@ -23,16 +23,16 @@ export function activate(context: vscode.ExtensionContext): void {
     config.onDidChange(() => menu.render()),
   );
 
-  const binaryPath = resolveClaudeBinary();
+  const binaryPath = ClaudeBinaryLib.resolve();
   if (!binaryPath) {
     void vscode.window.showWarningMessage("Ghostline: Claude Code CLI not found. Install the Claude Code extension.");
     return;
   }
   log.appendLine(`Using Claude Code CLI at ${binaryPath}`);
-  menu.setModelCatalog(new ModelCatalog(binaryPath));
+  menu.setModelCatalog(new ModelCatalogService(binaryPath));
 
-  const engine = new ClaudeEngine(binaryPath, config.current, log, "complete", COMPLETION_SYSTEM_PROMPT);
-  const provider = new ClaudeInlineProvider(
+  const engine = new ClaudeEngineService(binaryPath, config.current, log, "complete", COMPLETION_SYSTEM_PROMPT);
+  const provider = new InlineProviderService(
     engine,
     getConfig,
     () => menu.isPaused(),

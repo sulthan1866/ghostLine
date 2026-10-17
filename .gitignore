@@ -23,5 +23,4 @@ yarn-error.log*
 Thumbs.db
 *.swp
 
-# Package manager: npm only (package-lock.json)
-yarn.lock
+.fallow/
