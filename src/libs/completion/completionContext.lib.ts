@@ -6,7 +6,7 @@ import { NeighbourSnippetsLib } from "./neighbourSnippets.lib";
 
 export class CompletionContextLib {
   /**
-   * Copilot-style context: code around the cursor (prefix/suffix, cut at line
+   * Context: code around the cursor (prefix/suffix, cut at line
    * boundaries) plus the most similar windows from other open files of the same
    * language, ranked by Jaccard similarity of identifiers.
    */

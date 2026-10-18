@@ -115,7 +115,7 @@ export class PostProcessLib {
   }
 
   /**
-   * Cursor inside a word, like Copilot's `cur|ent` → `r`. Models often also write the rest of the word
+   * Cursor inside a word, e.g. `cur|ent` → `r`. Models often also write the rest of the word
    * (`rent`, `rrent`), so try each way of dropping the end of the reply and keep the first that makes a
    * word already used nearby. A guess that makes an unknown word (`com|ole` → `comsole`) is dropped.
    */

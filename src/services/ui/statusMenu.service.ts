@@ -12,7 +12,7 @@ import type { ConfigStoreService } from "../config/configStore.service";
 import { SnoozeService } from "./snooze.service";
 
 /**
- * Copilot-style status bar entry: a hover card with links for toggling
+ * Status bar entry: a hover card with links for toggling
  * suggestions, picking the model and snoozing. Also tracks whether suggestions
  * are paused (snoozed, or the model cannot be used).
  */

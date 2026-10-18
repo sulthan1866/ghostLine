@@ -1,6 +1,6 @@
 # Ghostline
 
-Copilot-style inline (ghost-text) completions in VS Code, powered by the Claude Code CLI you are already signed in to. Not affiliated with Anthropic.
+AI autocomplete (inline ghost-text completions) in VS Code, powered by the Claude Code CLI you are already signed in to. Not affiliated with Anthropic.
 
 ## Requirements
 

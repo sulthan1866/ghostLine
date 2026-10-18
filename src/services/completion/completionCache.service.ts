@@ -1,5 +1,5 @@
 /**
- * "Typing-through" cache, as Copilot does: if the user types characters that
+ * "Typing-through" cache: if the user types characters that
  * match the start of the current suggestion, show the remainder instantly
  * instead of calling the model again.
  */

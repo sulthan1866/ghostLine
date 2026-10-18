@@ -1,8 +1,8 @@
 {
   "name": "ghostline",
   "displayName": "Ghostline",
-  "description": "Copilot-style inline completions powered by your local Claude Code CLI.",
-  "version": "1.0.0",
+  "description": "AI autocomplete (inline completions) powered by your local Claude Code CLI.",
+  "version": "1.0.1",
   "publisher": "sulthan1869",
   "icon": "images/icon.png",
   "repository": {
@@ -11,10 +11,6 @@
   "engines": {
     "vscode": "^1.90.0"
   },
-  "categories": [
-    "Programming Languages",
-    "Machine Learning"
-  ],
   "activationEvents": [
     "onStartupFinished"
   ],
