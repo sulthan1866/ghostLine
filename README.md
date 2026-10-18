@@ -1,6 +1,23 @@
 # Ghostline
 
-AI autocomplete (inline ghost-text completions) in VS Code, powered by the Claude Code CLI you are already signed in to. Not affiliated with Anthropic.
+**AI autocomplete in VS Code, using the Claude Code plan you already have.** No extra subscription, no API key.
+
+Ghostline shows inline ghost-text completions as you type, powered by the Claude Code CLI you are already signed in to. Not affiliated with Anthropic.
+
+![Ghostline demo](images/demo.gif)
+
+## Why Ghostline
+
+- **Nothing new to pay for or set up.** It uses your existing Claude Code sign-in and plan.
+- **Next edit suggestions.** Optionally suggests the follow-up edit after a rename or typo, shown as an inline diff.
+- **Choose your model.** Use a fast model for snappy completions or a stronger one for harder code.
+- **Careful with secrets.** Files such as `.env`, `.npmrc` and `*.pem` are never sent.
+
+## Install
+
+1. Install and sign in to the official [Claude Code extension](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code).
+2. Install [Ghostline](https://marketplace.visualstudio.com/items?itemName=sulthan1869.ghostline), or run `ext install sulthan1869.ghostline` from Quick Open (Ctrl+P / Cmd+P).
+3. Start typing.
 
 ## Requirements
 
@@ -42,8 +59,8 @@ All available from the Command Palette:
 | `ghostline.enabled` | `true` | Enable inline completions. |
 | `ghostline.nextEditSuggestions` | `false` | Suggest follow-up edits near the cursor. |
 | `ghostline.debounceMs` | `350` | Pause in typing (ms) before a completion is requested. |
-| `ghostline.maxPrefixChars` | `3000` | Characters before the cursor sent with each completion (500–20,000). More context, more usage. |
-| `ghostline.maxSuffixChars` | `1000` | Characters after the cursor sent with each completion (0–10,000). More context, more usage. |
+| `ghostline.maxPrefixChars` | `2000` | Characters before the cursor sent with each completion (500–20,000). More context, more usage. |
+| `ghostline.maxSuffixChars` | `1000` | Characters after the cursor sent with each completion (250–10,000). More context, more usage. |
 | `ghostline.useNeighbourFiles` | `true` | Include similar snippets from other open files of the same language. |
 | `ghostline.excludedLanguages` | `plaintext`, `scminput`, `log` | Language IDs where completions are disabled. |
 
@@ -61,3 +78,7 @@ All available from the Command Palette:
 - **"Claude Code CLI not found"** – install the Claude Code extension and sign in, then reload the window.
 - **No suggestions** – check the status-bar item is not paused or snoozed, that the language is not excluded, and look in the **Ghostline** output channel for errors.
 - **Slow suggestions** – use a fast model such as `haiku`, or increase `ghostline.debounceMs` if requests are firing too often.
+
+## Licence
+
+[MIT](LICENSE)

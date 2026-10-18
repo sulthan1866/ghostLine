@@ -2,11 +2,35 @@
   "name": "ghostline",
   "displayName": "Ghostline",
   "description": "AI autocomplete (inline completions) powered by your local Claude Code CLI.",
-  "version": "1.0.1",
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "claude",
+    "claude code",
+    "autocomplete",
+    "inline completion",
+    "ai",
+    "ghost text",
+    "next edit"
+  ],
+  "version": "1.0.2",
   "publisher": "sulthan1869",
+  "license": "MIT",
   "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
   "repository": {
+    "type": "git",
     "url": "https://github.com/sulthan1866/ghostLine"
+  },
+  "homepage": "https://github.com/sulthan1866/ghostLine#readme",
+  "bugs": {
+    "url": "https://github.com/sulthan1866/ghostLine/issues"
   },
   "engines": {
     "vscode": "^1.90.0"
@@ -125,7 +149,7 @@
     "lint": "eslint src test && prettier --check src test",
     "format": "prettier --write src test",
     "test": "jest",
-    "package": "yes y | vsce package"
+    "package": "vsce package"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
